@@ -25,8 +25,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rack'
   spec.add_development_dependency 'webmock'
+  spec.add_development_dependency 'oj'
 
   spec.add_dependency 'rest-client'
-  spec.add_dependency 'oj'
   spec.add_dependency 'hashie'
 end
