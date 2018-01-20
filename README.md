@@ -10,7 +10,7 @@ Crunchbase API v3.1 - Ruby Library [CrunchBase Data Hub](https://data.crunchbase
 
 Add this line to your application's Gemfile:
 
-    gem 'crunchbase-ruby-library'
+    gem 'ruby_crunchbase_api'
 
 And then execute:
 
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install crunchbase-ruby-library
+    $ gem install ruby_crunchbase_api
 
 ### Certificate (User Key)
 
@@ -29,76 +29,28 @@ cCeate the file `config/initializers/crunchbase.rb` in your rails project and ad
     Crunchbase::API.key = 'user_key'
     Crunchbase::API.debug = false
 
-### Creating request client
+#### Getting the Item by uuid or permalink...
 
-    client = Crunchbase::Client.new
+    person = Person.get("mark-zuckerberg")
+    company = Organization.get("facebook")
 
-### Searchable items
+#### Searching by Object...
 
-    - Organization
-    - Person
-    - Product
-    - IPO
-    - Acquisitions
-    - Funding Rounds
+    search_results = Person.search({"name": "mark"})
+    #get the next page of results
+    search_results = search_results.next
 
-#### Searching by...
+#### Searching through API directly...
 
-    * client.search({query: "Google"}, 'organizations') # Full text search of an Organization's name, aliases
-    * client.search({name: "Google"}, 'organizations') # Full text search limited to name and aliases
-    * client.search({domain_name: "google.com"}, 'organizations') # Text search of an Organization's domain_name
-    * client.search({name: "encore"}, 'people') # A full-text query of name only
-    * client.search({query: "encore"}, 'people') # A full-text query of name, title, and company
-    * client.search({types: "investor"}, 'people') # Filter by type (currently, either this is empty, or is simply "investor")
-    * client.search({}, 'products')
-    * client.search({}, 'ipos')
-    * client.search({}, 'acquisitions')
-    * client.search({}, 'funding-rounds')
+    API.get("https://api.crunchbase.com/v3.1/organizations?name=facebook")
+    API.batch({"requests": [
+      { "type": "<entity_type>", "uuid": "<entity_uuid>", "relationships": ["<relationship_name>"]}
+    ]})
 
-    returned response included data on below:
-        * results
-        * total_items
-        * per_page
-        * pages
-        * current_page
-
-### Get Organization by the permalink
-
-    => response = client.get('facebook', 'Organization')
-
-    Relationship objects [ primary_image founders current_team investors owned_by sub_organizations headquarters offices products categories customers competitors members memberships funding_rounds investments acquisitions acquired_by ipo funds websites images videos news ]
-
-    methods: Get Organization with one relationship data
-
-    => response = client.get('facebook', 'Organization', 'PastTeam')
-    past_team.results.collect { |p| [p.title, p.person.first_name] }
-
-    ....
-
-### Get Person by the permalink
-
-    => person = client.get(permalink, 'Person')
-    => #<Crunchbase::Model::Person:0x007fc185215f68 @type_name="Person", @uuid="a578dcf9859ec8b52182e3aa3c383b13", ...>
-
-    => people = client.list('Person', page: page)
-    => people.results
-    => [
-        #<Crunchbase::Model::PersonSummary:...>,
-        #<Crunchbase::Model::PersonSummary: ...>,
-        #<Crunchbase::Model::PersonSummary: ...>,
-        #<Crunchbase::Model::PersonSummary: ...>
-        ......
-    ]
-
-### How to debug in the console
-
-    $ ruby bin/console OR ./bin/console
-    => client = Crunchbase::Client.new
-    => ...
 
 ### Contributing
 
-1. Fork it ( https://github.com/encoreshao/crunchbase-ruby-library/fork )
+1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -106,4 +58,4 @@ cCeate the file `config/initializers/crunchbase.rb` in your rails project and ad
 
 ### Copyright
 
-Copyright © 2017-10 Encore Shao. See LICENSE for details.
+Copyright © 2019 Nolan Frausto. See LICENSE for details.

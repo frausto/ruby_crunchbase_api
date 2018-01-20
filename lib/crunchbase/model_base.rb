@@ -54,8 +54,8 @@ module Crunchbase
         new(res)
       end
 
-      def search
-        Search.search("#{API_BASE_URL}/#{super_class_endpoint}")
+      def search(query={})
+        Search.search("#{API_BASE_URL}/#{super_class_endpoint}", query)
       end
 
       def super_class_endpoint
