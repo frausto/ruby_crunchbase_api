@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ### Certificate (User Key)
 
-cCeate the file `config/initializers/crunchbase.rb` in your rails project and add user_key.
+Ceate the file `config/initializers/crunchbase.rb` in your rails project and add user_key.
 
     require 'crunchbase'
 
