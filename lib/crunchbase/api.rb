@@ -15,6 +15,7 @@ module Crunchbase
         params["user_key"] = @key
         query_params = URI.encode_www_form(params)
         url += "#{url =~ /\?/ ? '&' : '?'}#{query_params}"
+        url = URI.decode(url)
         debug_request("get", url)
         response = ::RestClient.get(url, {}) do |response, request, result, &block|
           debug_response(response)
@@ -34,8 +35,9 @@ module Crunchbase
          'X-Cb-User-Key' => @key,
          'Content-Type' => "application/json"
         }
+        url = "#{API_BASE_URL}/batch"
         debug_request("post", url, headers, params)
-        response = RestClient.post("#{API_BASE_URL}/batch", params.to_json, headers) do |response, request, result, &block|
+        response = RestClient.post(url, params.to_json, headers) do |response, request, result, &block|
           debug_response(response)
           case response.code
           when 200

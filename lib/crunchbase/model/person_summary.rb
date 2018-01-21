@@ -6,6 +6,10 @@ module Crunchbase
     class PersonSummary < Base
       endpoint 'people_summaries'
 
+      def to_person
+        Person.get(@properties.permalink)
+      end
+
     end
   end
 end

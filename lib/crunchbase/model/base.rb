@@ -18,12 +18,13 @@ module Crunchbase::Model
     end
 
     def initialize(json)
+      if json.has_key?("data")
+        @meta_data = json["meta_data"]
+        json = json["data"] || {}
+      end
       
-      @meta_data = json["meta_data"]
-      json = json["data"] || {}
       @type = json["type"]
       @uuid = json["uuid"]
-
       @relationships = json['relationships']
       @properties = json['properties']
       %w(created_at updated_at).each do |v|
@@ -35,10 +36,6 @@ module Crunchbase::Model
         end
       end
     end
-
-    def meow
-    end
-
     
     def convert_date!(date)
       return Time.parse(date) if date.is_a?(String)
