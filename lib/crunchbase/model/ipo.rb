@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Crunchbase::Model
-  class Ipo < ModelBase
+  class Ipo < Base
     endpoint 'ipos'
 
     def date_keys

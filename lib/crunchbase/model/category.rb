@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Crunchbase::Model
-  class Category < ModelBase
+  class Category < Base
     endpoint 'categories'
 
   end

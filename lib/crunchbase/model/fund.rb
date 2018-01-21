@@ -2,7 +2,7 @@
 # encoding utf-8
 
 module Crunchbase::Model
-  class Fund < ModelBase
+  class Fund < Base
     endpoint 'funds'
 
     def date_keys

@@ -3,7 +3,7 @@
 
 module Crunchbase
   module Model
-    class Person < ModelBase
+    class Person < Base
       endpoint 'people'
 
       def date_keys

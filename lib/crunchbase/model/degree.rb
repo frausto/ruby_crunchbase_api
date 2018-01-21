@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Crunchbase::Model
-  class Degree < ModelBase
+  class Degree < Base
     endpoint 'degrees'
 
   end

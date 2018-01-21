@@ -3,7 +3,7 @@
 
 module Crunchbase
   module Model
-    class Video < ModelBase
+    class Video < Base
       endpoint 'videos'
 
     end

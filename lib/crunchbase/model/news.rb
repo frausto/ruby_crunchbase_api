@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Crunchbase::Model
-  class News < ModelBase
+  class News < Base
     endpoint 'news'
 
     def date_keys

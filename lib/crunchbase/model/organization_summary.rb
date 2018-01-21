@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Crunchbase::Model
-  class OrganizationSummary < ModelBase
+  class OrganizationSummary < Base
     endpoint 'organization_summaries'
   end
 end

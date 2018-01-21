@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Crunchbase::Model
-  class FundingRound < ModelBase
+  class FundingRound < Base
     endpoint 'funding_rounds'
 
     def date_keys

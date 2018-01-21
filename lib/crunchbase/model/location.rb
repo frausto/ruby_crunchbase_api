@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Crunchbase::Model
-  class Location < ModelBase
+  class Location < Base
     endpoint 'locations'
 
     

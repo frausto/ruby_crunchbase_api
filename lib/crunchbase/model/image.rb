@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Crunchbase::Model
-  class Image < ModelBase
+  class Image < Base
     endpoint 'images'
 
   end

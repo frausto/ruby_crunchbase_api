@@ -3,7 +3,7 @@
 
 module Crunchbase
   module Model
-    class Website < ModelBase
+    class Website < Base
       endpoint 'websites'
 
     end

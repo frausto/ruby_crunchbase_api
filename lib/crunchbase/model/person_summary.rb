@@ -3,7 +3,7 @@
 
 module Crunchbase
   module Model
-    class PersonSummary < ModelBase
+    class PersonSummary < Base
       endpoint 'people_summaries'
 
     end

@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Crunchbase::Model
-  class Acquisition < ModelBase
+  class Acquisition < Base
     endpoint 'acquisitions'
     
     def date_keys
