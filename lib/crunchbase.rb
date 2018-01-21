@@ -11,7 +11,7 @@ require 'crunchbase/model/base'
 #models
 require 'crunchbase/model/acquisition'
 require 'crunchbase/model/address'
-require 'crunchbase/model/category'
+require 'crunchbase/model/category_summary'
 require 'crunchbase/model/degree'
 require 'crunchbase/model/fund'
 require 'crunchbase/model/funding_round'

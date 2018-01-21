@@ -3,7 +3,7 @@
 
 module Crunchbase::Model
   class FundingRound < Base
-    endpoint 'funding_rounds'
+    endpoint 'funding-rounds'
 
     def date_keys
       %w(announced_on closed_on)

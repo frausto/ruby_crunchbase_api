@@ -30,14 +30,17 @@ module Crunchbase
     end
 
     def next
+      return nil if !@key_set_url
       self.class.search(@key_set_url)
     end
 
     def prev_page
+      return nil if !@prev_page_url
       self.class.search(@prev_page_url)
     end
 
     def next_page
+      return nil if !@next_page_url
       self.class.search(@next_page_url)
     end
 

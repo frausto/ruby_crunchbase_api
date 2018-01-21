@@ -50,7 +50,7 @@ module Crunchbase::Model
       end
 
       def get(id)
-        res = API.get("#{Crunchbase::API_BASE_URL}/#{super_class_endpoint}/#{id}")
+        res = ::Crunchbase::API.get("#{Crunchbase::API_BASE_URL}/#{super_class_endpoint}/#{id}")
         new(res)
       end
 
