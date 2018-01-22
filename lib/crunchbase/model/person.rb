@@ -6,6 +6,9 @@ module Crunchbase
     class Person < Base
       endpoint 'people'
 
+      relations %w(primary_affiliation primary_location primary_image websites degrees jobs advisory_roles
+        founded_companies investments images news)
+
       def date_keys
         %w(born_on died_on)
       end

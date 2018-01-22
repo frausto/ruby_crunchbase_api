@@ -17,7 +17,10 @@ module Crunchbase::Model
 
     def method_missing(m, *args, &block)
       if !@properties.nil? && @properties.has_key?(m.to_s)
-        return @properties[m.to_s]
+        return @properties[m.to_s] 
+      end
+      if !@relationships.nil? && @relationships.has_key?(m.to_s)
+        return @relationships[m.to_s] 
       end
       # raise ArgumentError.new("Method `#{m}` doesn't exist.")
       puts "Method `#{m}` doesn't exist."
