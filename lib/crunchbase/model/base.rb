@@ -9,7 +9,7 @@ module Crunchbase::Model
       CarnalityMtm = "ManyToMany"
       CarnalityMto = "ManyToOne"
 
-    attr_accessor :raw_data, :meta_data, :relationships, :properties, :type, :uuid
+    attr_accessor :raw_data, :meta_data, :relationships, :properties, :type, :uuid, :relationship_keys
 
     def date_keys
       []
@@ -19,7 +19,9 @@ module Crunchbase::Model
       if !@properties.nil? && @properties.has_key?(m.to_s)
         return @properties[m.to_s]
       end
-      raise ArgumentError.new("Method `#{m}` doesn't exist.")
+      # raise ArgumentError.new("Method `#{m}` doesn't exist.")
+      puts "Method `#{m}` doesn't exist."
+      nil
     end
 
     def initialize(json)
@@ -80,11 +82,11 @@ module Crunchbase::Model
       end
 
       def relations(var)
-        @relations = var
+        @relationship_keys = var
       end
 
       def batch(list_o_things, manual_relations=[])
-        manual_relations = @relations || [] if manual_relations.empty?
+        manual_relations = @relationship_keys || [] if manual_relations.empty?
         request_query = {
           "requests" => list_o_things.map do |thang|
             {"type" => self.to_s.split("::").last, "uuid" => thang.uuid, "relationships" => manual_relations}
