@@ -15,18 +15,19 @@ module Crunchbase
       json = result["data"]
       @items = []
       @items = json['items'].map do |r|
-        o = Object.const_get("Crunchbase::Model::#{r["type"]}")
-        o.new(r)
-      end
+        ::Crunchbase::Model::Base.to_model(r)
+      end.compact
 
-      @total_items      = json['paging']['total_items']
-      @per_page         = json['paging']['items_per_page']
-      @pages            = json['paging']['number_of_pages']
-      @current_page     = json['paging']['current_page']
-      @prev_page_url    = json['paging']['prev_page_url']
-      @next_page_url    = json['paging']['next_page_url']
-      @key_set_url      = json['paging']['key_set_url']
-      @sort_order       = json['paging']['sort_order']
+      if json['paging']
+        @total_items      = json['paging']['total_items']
+        @per_page         = json['paging']['items_per_page']
+        @pages            = json['paging']['number_of_pages']
+        @current_page     = json['paging']['current_page']
+        @prev_page_url    = json['paging']['prev_page_url']
+        @next_page_url    = json['paging']['next_page_url']
+        @key_set_url      = json['paging']['key_set_url']
+        @sort_order       = json['paging']['sort_order']
+      end
     end
 
     def next

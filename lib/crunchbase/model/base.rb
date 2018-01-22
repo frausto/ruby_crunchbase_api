@@ -4,6 +4,11 @@
 module Crunchbase::Model
   class Base
 
+      CarnalityOto = "OneToOne"
+      CarnalityOtm = "OneToMany"
+      CarnalityMtm = "ManyToMany"
+      CarnalityMto = "ManyToOne"
+
     attr_accessor :raw_data, :meta_data, :relationships, :properties, :type, :uuid
 
     def date_keys
@@ -25,14 +30,29 @@ module Crunchbase::Model
       
       @type = json["type"]
       @uuid = json["uuid"]
-      @relationships = json['relationships']
-      @properties = json['properties']
+      
+      @properties = ::Hashie::Mash.new(json['properties'])
       %w(created_at updated_at).each do |v|
         @properties[v] = convert_date!(@properties[v])
       end
       date_keys.each do |v|
         if !@properties[v].nil? && !@properties[v].empty?
           @properties[v] = Date.parse(@properties[v])
+        end
+      end
+      @relationships = ::Hashie::Mash.new
+      json['relationships'] ||= []
+      json['relationships'].each do |key, val|
+        if val.kind_of?(Array)
+          val = {"cardinality" => "many", "items" => val}
+        end
+        @relationships[key] = if !val["cardinality"] || val["cardinality"] == CarnalityOto || val["cardinality"] == CarnalityMto
+          r =  val["item"] ? val["item"] : val
+          self.class.to_model(r)
+        else
+          val["items"].map do |r|
+            self.class.to_model(r)
+          end.compact
         end
       end
     end
@@ -45,8 +65,33 @@ module Crunchbase::Model
     end
     
     class << self
+
+      def to_model(r)
+        if r["type"]
+          o = Object.const_get("Crunchbase::Model::#{r["type"]}")
+          o.new(r)
+        else
+          nil
+        end
+      end
+
       def endpoint(var)
         @endpoint_var = var.to_s
+      end
+
+      def relations(var)
+        @relations = var
+      end
+
+      def batch(list_o_things, manual_relations=[])
+        manual_relations = @relations || [] if manual_relations.empty?
+        request_query = {
+          "requests" => list_o_things.map do |thang|
+            {"type" => self.to_s.split("::").last, "uuid" => thang.uuid, "relationships" => manual_relations}
+          end
+        }
+        res = ::Crunchbase::API.batch(request_query)
+        ::Crunchbase::Search.new(res)
       end
 
       def get(id)

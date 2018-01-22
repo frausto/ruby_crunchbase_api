@@ -5,6 +5,8 @@ require 'rest-client'
 module Crunchbase
   class API
 
+    MAX_BATCH = 5
+
     @debug = false
 
     class << self
@@ -31,6 +33,7 @@ module Crunchbase
 
       def batch(params)
         raise Exception, 'User key required, visit https://data.crunchbase.com/v3.1/docs' unless @key
+        raise Exception, "Too many requests(#{params['requests'].length}) in batch, max allowed 5" if params['requests'].length > 5
         headers = {
          'X-Cb-User-Key' => @key,
          'Content-Type' => "application/json"
