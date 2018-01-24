@@ -23,7 +23,7 @@ module Crunchbase::Model
         return @relationships[m.to_s] 
       end
       # raise ArgumentError.new("Method `#{m}` doesn't exist.")
-      puts "Method `#{m}` doesn't exist."
+      puts "Method `#{m}` doesn't exist." if API.debug
       nil
     end
 
