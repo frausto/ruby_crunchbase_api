@@ -68,6 +68,12 @@ module Crunchbase::Model
     rescue
       nil
     end
+
+    def get_relationship(get_relation)
+      obj_id = @properties["permalink"] || @uuid
+      res = ::Crunchbase::API.get("#{Crunchbase::API_BASE_URL}/#{self.class.super_class_endpoint}/#{obj_id}/#{get_relation}")
+      ::Crunchbase::Search.new(res)
+    end
     
     class << self
 
@@ -102,6 +108,11 @@ module Crunchbase::Model
       def get(id)
         res = ::Crunchbase::API.get("#{Crunchbase::API_BASE_URL}/#{super_class_endpoint}/#{id}")
         new(res)
+      end
+
+      def get_relationship(id, get_relation)
+        res = ::Crunchbase::API.get("#{Crunchbase::API_BASE_URL}/#{super_class_endpoint}/#{id}/#{get_relation}")
+        ::Crunchbase::Search.new(res)
       end
 
       def search(query={})
